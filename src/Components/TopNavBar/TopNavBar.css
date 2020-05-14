@@ -1,0 +1,10 @@
+.trello-brand{
+    height: 25px;
+    opacity: 0.8;
+}
+.trello-brand:hover{
+    opacity: 1;
+}
+.bg-trello{
+    background-color: #216AA7 !important;
+}
