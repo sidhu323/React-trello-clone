@@ -9,7 +9,7 @@ const [allBoards,setAllBoards] = useState([]);
 const getAllBoards = ()=>{
 getMyBoards().then((res)=>{
 setAllBoards(res);
-console.log(res);
+
 })
 };
 
@@ -38,11 +38,11 @@ return (
                     <div className="col-lg-3 col-sm-12 personal-board mt-2" key={board.id}>
                         <>
                             <Link to={`/boards/${board.id}`} style={{color: 'inherit', textDecoration: 'inherit'}}>
-                            <div className="card">
+                            <div className="card all-board-card">
                                 <div className="card-body" style={{
-                      backgroundColor: board.prefs.backgroundColor,
-                      backgroundImage: `url(${board.prefs.backgroundImage})`,
-                      backgroundSize: "cover"
+                         backgroundColor: board.prefs.backgroundColor,
+                         backgroundImage: `url(${board.prefs.backgroundImage})`,
+                         backgroundSize: "cover"
                       
                     }}>
                                     <h5 className="card-title">{board.name}</h5>

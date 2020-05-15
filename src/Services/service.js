@@ -28,3 +28,11 @@ export const getCardsOnList = (listId) => new Promise((resolve, reject) => {
     .then((res) => res && resolve(res))
     .catch((err) => reject(err));
 });
+
+//Create a new Cards on list
+export const CreateCardOnList = (id) => new Promise((resolve, reject) => {
+    crudData(endPoints.createNewList , 'POST',{ idList: id })
+      .then((res) => res && resolve(res))
+      .catch((err) => reject(err));
+  });
+

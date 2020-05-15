@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import TrelloBrandLogo from '../../Assets/header-logo-2x.01ef898811a879595cea.png'
 import './TopNavBar.css';
 
 const TopNavBar = () =>{
