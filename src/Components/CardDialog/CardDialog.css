@@ -1,0 +1,43 @@
+.modal-content{
+    background: #EBECF0 !important;
+}
+.modal-header{
+    border: none !important;
+}
+.btn-add-item{
+    background-color: rgba(9,30,66,.04);
+    box-shadow: none;
+    border: none;
+}
+.add-item-area{
+justify-content: space-between;
+align-items: center;
+}
+.each-checklist-item-main-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.each-checklist-item-main-box{
+    margin-bottom: 10px;
+
+}
+.each-checklist-item-main-box:hover{
+background-color: white;
+
+}
+.each-checklist-item-main-box:hover .dropdown {
+    display: inline-flex;
+    zoom: 100%;
+}
+.dropdown{
+    display: none;
+
+}
+.trello-button{
+    background-color: rgba(9,30,66,.04) !important;
+    box-shadow: none;
+    border: none;
+    padding:0 5px !important;
+}

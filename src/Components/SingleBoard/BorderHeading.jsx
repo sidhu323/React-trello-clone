@@ -9,7 +9,7 @@ const BorderHeading = (props)=>{
         <React.Fragment>
             
         <div className="heading p-2" style={{ backgroundColor: boardData && boardData.prefs.backgroundColor }}>
-            <h5 className="text-white font-weight-bold"> {boardData && boardData.name}</h5>
+            <h5 className="text-white font-weight-bold pl-2"> {boardData && boardData.name}</h5>
         </div>
         </React.Fragment>
     )

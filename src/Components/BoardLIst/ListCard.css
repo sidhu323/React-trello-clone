@@ -9,10 +9,19 @@
 .trello-list-card{
     background-color: white;
     border-radius: 8px;
-    box-shadow: inset 0 0 0 2px #dfe1e6;
+    -webkit-box-shadow: 1px 6px 5px -4px rgba(240,232,240,1);
+-moz-box-shadow: 1px 6px 5px -4px rgba(240,232,240,1);
+box-shadow: 1px 6px 5px -4px rgba(240,232,240,1);
     margin: 10px;
     padding: 20px 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+}
+.trello-list-card:hover{
+   background: rgb(208, 210, 214) ;
+   cursor: pointer;
 }
 .card-body{
     padding: 0 !important;
@@ -38,3 +47,28 @@
 .add-card:focus{
     outline: none;
 }
+.particular-board-card-body{
+    height: 200px;
+    overflow: scroll;
+}
+.add-card-text{
+    background-color: white !important;
+    border-radius: 8px !important;
+    -webkit-box-shadow: 1px 6px 5px -4px rgba(240,232,240,1) !important;
+-moz-box-shadow: 1px 6px 5px -4px rgba(240,232,240,1) !important;
+box-shadow: 1px 6px 5px -4px rgba(240,232,240,1) !important;
+    margin: 9px 10px !important;
+    width:93% !important;
+}
+.add-item-area{
+    margin: 10px 10px;
+}
+.trello-list-card:hover .dropdown {
+    display: inline-flex;
+    zoom: 100%;
+}
+.each-card-dot{
+    display: none;
+
+}
+
