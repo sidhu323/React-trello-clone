@@ -27,11 +27,11 @@ align-items: center;
 background-color: white;
 
 }
-.each-checklist-item-main-box:hover .dropdown {
+.each-checklist-item-main-box:hover .vertical-dot {
     display: inline-flex;
     zoom: 100%;
 }
-.dropdown{
+.vertical-dot{
     display: none;
 
 }
