@@ -59,7 +59,10 @@ const BoardList = (props) => {
   const handleNewAddItem = (e) => {
     setNewAdditionItem(e.target.value);
   };
-  const handleClose = () => setShow(false);
+  const handleClose = () =>{
+    setShow(false);
+    setSelectedCardData();
+  }
 
 
   useEffect(() => {
@@ -91,9 +94,9 @@ const BoardList = (props) => {
 
         <div className="card-body particular-board-card-body">
           {listCards.map((card) => (
-            <div onClick={() => openCard(card)}>
-              <ListCard cardData={card} key={card.id} deleteCard={deleteCard} />
-            </div>
+            // <div onClick={() => openCard(card)}>
+              <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard}/>
+            // </div>
           ))}
         </div>
         {addingCardToList && currentlyUpdatingList === listData.id
@@ -150,7 +153,7 @@ const BoardList = (props) => {
           )}
       </div>
       {selectedCardData
-    && <CardDialog cardData={selectedCardData} show={show} onHide={handleClose} />}
+    && <CardDialog cardData={selectedCardData} show={show} onHide={handleClose}/>}
     </>
   );
 };

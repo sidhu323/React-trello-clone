@@ -62,19 +62,20 @@ const CardDialog = (props) => {
 
   const addNewChecklistToCard = (cardId, checklistName) => {
     addNewChecklist(cardId, checklistName)
-      .then(() => getCardChecklists(cardId))
+      .then(() => getChecklistsForCard(cardId))
       .then(() => setNewChecklist(false));
   };
   const handleNewAddItem = (e) => {
     setNewAdditionItem(e.target.value);
   };
 
-  const deleteChecklistFromCard = (checklistId) => {
-    deleteChecklist(checklistId);
+  const deleteChecklistFromCard = (checklistId,cardId) => {
+    deleteChecklist(checklistId).then(() => getChecklistsForCard(cardId));
+
   };
 
-  const deleteChecklistItemFromChecklist = (checklistId, checkItemId) => {
-    deleteChecklistCheckItem(checklistId, checkItemId);
+  const deleteChecklistItemFromChecklist = (checklistId, checkItemId,cardId) => {
+    deleteChecklistCheckItem(checklistId, checkItemId).then(() => getChecklistsForCard(cardId));
   };
 
 return (
@@ -98,7 +99,7 @@ return (
                           />
                           {checklist.name}
                         </h5>
-                        <button type="button" className="btn btn-sm trello-button" onClick={() => deleteChecklistFromCard(checklist.id)}>Delete</button>
+                        <button type="button" className="btn btn-sm trello-button" onClick={() => deleteChecklistFromCard(checklist.id, cardData.id)}>Delete</button>
                       </div>
 
 
@@ -129,7 +130,7 @@ return (
                               <i className="fa fa-ellipsis-h" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
 
                               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <span className="dropdown-item" onClick={() => deleteChecklistItemFromChecklist(checklist.id, checkItem.id)}>Delete</span>
+                                <span className="dropdown-item" onClick={() => deleteChecklistItemFromChecklist(checklist.id, checkItem.id, cardData.id)}>Delete</span>
                               </div>
                             </div>
                           </div>
