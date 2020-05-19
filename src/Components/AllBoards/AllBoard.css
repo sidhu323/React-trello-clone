@@ -1,0 +1,30 @@
+.boardmenu{
+    display: flex;
+    /* min-width: 15rem; */
+    border-radius: 4px;
+    align-items:  center;
+    cursor:pointer;
+    background-color:#E4F0F6;
+    color:#0079BF;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+}
+.boardmenu:active{
+    opacity: 1;
+    font-weight: 900;
+    
+}
+.personal-board{
+    color: white;
+    font-size: 14px;
+   
+}
+.card-title{
+    font-size: 15px !important;
+    font-weight: 900;
+}
+
+.all-board-card{
+    height: 80px !important;
+}
