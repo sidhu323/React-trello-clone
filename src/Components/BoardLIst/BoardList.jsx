@@ -43,13 +43,10 @@ const BoardList = (props) => {
   };
 
   const deleteCard = (cardId) => {
-    console.log('delete card triggered');
-    console.log('delete card triggered');
     deleteCardFromList(cardId)
       .then(() => getCardsForList());
   };
   const openCard = (cardData) => {
-    console.log('opencard clidked');
     setSelectedCardData(cardData);
     setShow(true);
     console.log(cardData);
@@ -128,8 +125,8 @@ const BoardList = (props) => {
         </div>
         <div className="card-body particular-board-card-body">
           {listCards.map((card) => (
-            <div onClick={() => openCard(card)}>
-              <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard} />
+            <div>
+              <ListCard onClick={() => openCard(card)} cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard} />
             </div>
           ))}
         </div>

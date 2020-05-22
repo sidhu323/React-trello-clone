@@ -6,7 +6,6 @@ import BoardList from '../BoardLIst/BoardList';
 import "./SingleBoard.css";
 const SingleBoard = (props)=>{
 
-
     const [currentBoardId] = useState(props.match.params.boardId);
     const [boardData, setBoardData] = useState();
     const [boardLists, setBoardLists] = useState([]);
