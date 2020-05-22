@@ -91,7 +91,26 @@ const BoardList = (props) => {
         onClick={() => getCardInfo(listData.id)}
       >
         <div className="d-flex justify-content-between align-items-center">
-          <div className="card-title">{listData && listData.name}</div>
+
+          { (showInput)
+            ? (
+              <div className="form-group">
+                <input
+                  onBlur={saveTitle}
+                  type="text"
+                  className="form-control form-control-sm"
+                  name=""
+                  id=""
+                  value={titleName}
+                  onChange={updateTitle}
+                  aria-describedby="helpId"
+                  placeholder=""
+                />
+              </div>
+            )
+            : (
+              <div className="card-title" onClick={openInputText}>{listData && listData.name}</div>
+            )}
           <div className="dropdown mr-3">
             <i
               className="fa fa-ellipsis-h "
