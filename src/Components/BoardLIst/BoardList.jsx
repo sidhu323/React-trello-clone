@@ -16,6 +16,7 @@ const BoardList = (props) => {
   const [show, setShow] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [titleName, setTitleName] = useState(listData.name);
+
   const [addingCardToList, setAddingCardToList] = useState([]);
   const [currentlyUpdatingList, setCurrentlyUpdatingList] = useState([]);
   const [selectedCardData, setSelectedCardData] = useState();
@@ -43,6 +44,7 @@ const BoardList = (props) => {
 
   const deleteCard = (cardId) => {
     console.log('delete card triggered');
+    console.log('delete card triggered')
     deleteCardFromList(cardId)
       .then(() => getCardsForList());
   };
@@ -75,6 +77,8 @@ const BoardList = (props) => {
   const updateTitle = (e) => {
     setTitleName(e.target.value);
   };
+  const handleClose = () => setShow(false);
+
 
   useEffect(() => {
     getCardsForList(listData.id);
@@ -108,6 +112,7 @@ const BoardList = (props) => {
 
 
           {/* <div className="card-title">{listData && listData.name}</div> */}
+          <div className="card-title">{listData && listData.name}</div>
           <div className="dropdown mr-3">
 
             <i
@@ -131,6 +136,9 @@ const BoardList = (props) => {
             // <div onClick={() => openCard(card)}>
             <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard} />
             // </div>
+            <div onClick={() => openCard(card)}>
+              <ListCard cardData={card} key={card.id} deleteCard={deleteCard} />
+            </div>
           ))}
         </div>
         {addingCardToList && currentlyUpdatingList === listData.id

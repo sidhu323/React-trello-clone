@@ -7,11 +7,13 @@ import './ListCard.css';
 
 const ListCard = (props) => {
   const { cardData, deleteCard, openCard } = props;
+  const { cardData, deleteCard } = props;
   return (
     <>
 
       <div className="trello-list-card">
         <div onClick={() => openCard(cardData)}>{cardData && cardData.name}</div>
+        {cardData && cardData.name}
         {/* <div class="edit"><a href="#"><i class="fa fa-pencil"></i></a></div>
           <div class="edit"><a href="#"><i class="fa fa-trash"></i></a></div> */}
 
