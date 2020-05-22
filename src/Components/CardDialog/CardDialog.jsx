@@ -96,7 +96,26 @@ const CardDialog = (props) => {
     <>
       <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-          <Modal.Title>{cardData && cardData.name}</Modal.Title>
+          { (showInput)
+            ? (
+              <div className="form-group">
+                <input
+                  onBlur={saveTitle}
+                  type="text"
+                  className="form-control form-control-sm"
+                  name=""
+                  id=""
+                  value={titleName}
+                  onChange={updateTitle}
+                  aria-describedby="helpId"
+                  placeholder=""
+                />
+              </div>
+            )
+            : (
+              <Modal.Title onClick={openInputText}>{cardData && cardData.name}</Modal.Title>
+            )}
+
         </Modal.Header>
         <Modal.Body>
           <div className="container-fluid">
@@ -107,20 +126,20 @@ const CardDialog = (props) => {
                     <>
                       <div className="d-flex justify-content-between">
                         <h5 className="mt-2 mb-2 ">
-                          <i
-                            className="fa fa-check-square-o mr-2"
-                            aria-hidden="true"
-                          />
-                          {checklist.name}
-                        </h5>
+                      <i
+                          className="fa fa-check-square-o mr-2"
+                          aria-hidden="true"
+                        />
+                      {checklist.name}
+                    </h5>
                         <button type="button" className="btn btn-sm trello-button" onClick={() => deleteChecklistFromCard(checklist.id, cardData.id)}>Delete</button>
                       </div>
 
 
                       {checklist.checkItems.map((checkItem) => (
                         <>
-                          <div className="each-checklist-item-main-box">
-                            <div className="form-check">
+                      <div className="each-checklist-item-main-box">
+                          <div className="form-check">
                               <label
                                 className="form-check-label"
                                 style={{ textDecoration: checkItem.state === 'complete' ? 'line-through' : 'none' }}
@@ -139,7 +158,7 @@ const CardDialog = (props) => {
                               </label>
                             </div>
 
-                            <div className="dropdown vertical-dot">
+                          <div className="dropdown vertical-dot">
 
                               <i className="fa fa-ellipsis-h" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
 
@@ -147,15 +166,15 @@ const CardDialog = (props) => {
                                 <span className="dropdown-item" onClick={() => deleteChecklistItemFromChecklist(checklist.id, checkItem.id, cardData.id)}>Delete</span>
                               </div>
                             </div>
-                          </div>
+                        </div>
 
 
-                        </>
+                    </>
                       ))}
                       {addingItemToChecklist && currentlyUpdatingChecklist === checklist.id
                         ? (
-                          <div>
-                            <div className="form-group">
+                      <div>
+                          <div className="form-group">
 
                               <input
                                 type="text"
@@ -170,7 +189,7 @@ const CardDialog = (props) => {
 
                             </div>
 
-                            <div className="d-flex add-item-area">
+                          <div className="d-flex add-item-area">
                               <button
                                 type="button"
                                 className="btn btn-success  btn-sm"
@@ -186,16 +205,16 @@ const CardDialog = (props) => {
                               />
                             </div>
 
-                          </div>
+                        </div>
                         )
                         : (
-                          <button
-                            className="button btn-add-item mt-2"
-                            onClick={() => checklistNewAdditionState(true, checklist.id)}
-                          >
+                      <button
+                          className="button btn-add-item mt-2"
+                          onClick={() => checklistNewAdditionState(true, checklist.id)}
+                        >
                             Add an
                             item
-                          </button>
+                        </button>
                         )}
                     </>
                   ))}
@@ -251,6 +270,7 @@ const CardDialog = (props) => {
         </Modal.Body>
       </Modal>
     </>
+
   );
 };
 
