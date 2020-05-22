@@ -14,7 +14,8 @@ const BoardList = (props) => {
   const { listData } = props;
   const [listCards, setListCards] = useState([]);
   const [show, setShow] = useState(false);
-
+  const [showInput, setShowInput] = useState(false);
+  const [titleName, setTitleName] = useState(listData.name);
   const [addingCardToList, setAddingCardToList] = useState([]);
   const [currentlyUpdatingList, setCurrentlyUpdatingList] = useState([]);
   const [selectedCardData, setSelectedCardData] = useState();
@@ -41,7 +42,7 @@ const BoardList = (props) => {
   };
 
   const deleteCard = (cardId) => {
-    console.log('delete card triggered')
+    console.log('delete card triggered');
     deleteCardFromList(cardId)
       .then(() => getCardsForList());
   };
@@ -59,21 +60,54 @@ const BoardList = (props) => {
   const handleNewAddItem = (e) => {
     setNewAdditionItem(e.target.value);
   };
-  const handleClose = () =>{
+  const handleClose = () => {
     setShow(false);
     setSelectedCardData();
-  }
+  };
+  const openInputText = () => {
+    setShowInput(true);
+  };
 
+  const saveTitle = () => {
+    
+  };
+
+  const updateTitle = (e) => {
+    setTitleName(e.target.value);
+  };
 
   useEffect(() => {
     getCardsForList(listData.id);
   }, []);
+
+
   return (
     <>
       <div className="card particular-board-card" onClick={() => getCardInfo(listData.id)}>
 
         <div className="d-flex justify-content-between align-items-center">
-          <div className="card-title">{listData && listData.name}</div>
+          { (showInput)
+            ? (
+              <div className="form-group">
+                <input
+                  onBlur={saveTitle}
+                  type="text"
+                  className="form-control form-control-sm"
+                  name=""
+                  id=""
+                  value={titleName}
+                  onChange={updateTitle}
+                  aria-describedby="helpId"
+                  placeholder=""
+                />
+              </div>
+            )
+            : (
+              <div className="card-title" onClick={openInputText}>{listData && listData.name}</div>
+            )}
+
+
+          {/* <div className="card-title">{listData && listData.name}</div> */}
           <div className="dropdown mr-3">
 
             <i
@@ -95,7 +129,7 @@ const BoardList = (props) => {
         <div className="card-body particular-board-card-body">
           {listCards.map((card) => (
             // <div onClick={() => openCard(card)}>
-              <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard}/>
+            <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard} />
             // </div>
           ))}
         </div>
@@ -153,7 +187,7 @@ const BoardList = (props) => {
           )}
       </div>
       {selectedCardData
-    && <CardDialog cardData={selectedCardData} show={show} onHide={handleClose}/>}
+    && <CardDialog cardData={selectedCardData} show={show} onHide={handleClose} />}
     </>
   );
 };
