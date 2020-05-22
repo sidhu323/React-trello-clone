@@ -44,7 +44,7 @@ const BoardList = (props) => {
 
   const deleteCard = (cardId) => {
     console.log('delete card triggered');
-    console.log('delete card triggered')
+    console.log('delete card triggered');
     deleteCardFromList(cardId)
       .then(() => getCardsForList());
   };
@@ -71,13 +71,12 @@ const BoardList = (props) => {
   };
 
   const saveTitle = () => {
-    
+
   };
 
   const updateTitle = (e) => {
     setTitleName(e.target.value);
   };
-  const handleClose = () => setShow(false);
 
 
   useEffect(() => {
@@ -87,34 +86,13 @@ const BoardList = (props) => {
 
   return (
     <>
-      <div className="card particular-board-card" onClick={() => getCardInfo(listData.id)}>
-
+      <div
+        className="card particular-board-card"
+        onClick={() => getCardInfo(listData.id)}
+      >
         <div className="d-flex justify-content-between align-items-center">
-          { (showInput)
-            ? (
-              <div className="form-group">
-                <input
-                  onBlur={saveTitle}
-                  type="text"
-                  className="form-control form-control-sm"
-                  name=""
-                  id=""
-                  value={titleName}
-                  onChange={updateTitle}
-                  aria-describedby="helpId"
-                  placeholder=""
-                />
-              </div>
-            )
-            : (
-              <div className="card-title" onClick={openInputText}>{listData && listData.name}</div>
-            )}
-
-
-          {/* <div className="card-title">{listData && listData.name}</div> */}
           <div className="card-title">{listData && listData.name}</div>
           <div className="dropdown mr-3">
-
             <i
               className="fa fa-ellipsis-h "
               aria-hidden="true"
@@ -123,21 +101,16 @@ const BoardList = (props) => {
               aria-haspopup="true"
               aria-expanded="false"
             />
-
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a className="dropdown-item" href="#">Edit</a>
               <a className="dropdown-item" href="#">Archive</a>
             </div>
           </div>
         </div>
-
         <div className="card-body particular-board-card-body">
           {listCards.map((card) => (
-            // <div onClick={() => openCard(card)}>
-            <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard} />
-            // </div>
             <div onClick={() => openCard(card)}>
-              <ListCard cardData={card} key={card.id} deleteCard={deleteCard} />
+              <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard} />
             </div>
           ))}
         </div>
@@ -145,7 +118,6 @@ const BoardList = (props) => {
           ? (
             <div>
               <div className="form-group">
-
                 <textarea
                   type="text"
                   className="form-control add-card-text"
@@ -157,10 +129,7 @@ const BoardList = (props) => {
                   onChange={handleNewAddItem}
                   value={newAdditionItem}
                 />
-
               </div>
-
-
               <div className="d-flex add-item-area">
                 <button
                   type="button"
@@ -176,18 +145,17 @@ const BoardList = (props) => {
                   aria-hidden="true"
                 />
               </div>
-
             </div>
           )
           : (
             <button
               type="button "
               onClick={
-                () => {
-                  checklistNewAdditionState(true, listData.id);
-                  createCard(true, listData.id);
-                }
-              }
+     () => {
+       checklistNewAdditionState(true, listData.id);
+       createCard(true, listData.id);
+     }
+     }
               className="add-card"
             >
               {listCards.length === 0 ? '+ Add a card' : '+ Add another card'}
@@ -195,7 +163,7 @@ const BoardList = (props) => {
           )}
       </div>
       {selectedCardData
-    && <CardDialog cardData={selectedCardData} show={show} onHide={handleClose} />}
+  && <CardDialog cardData={selectedCardData} show={show} onHide={handleClose} />}
     </>
   );
 };
