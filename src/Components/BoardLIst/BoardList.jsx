@@ -68,7 +68,7 @@ const BoardList = (props) => {
   };
 
   const saveTitle = () => {
-
+    
   };
 
   const updateTitle = (e) => {
@@ -92,7 +92,7 @@ const BoardList = (props) => {
                 <input
                   onBlur={saveTitle}
                   type="text"
-                  className="form-control form-control-sm"
+                  className="form-control form-control-sm edit-form"
                   name=""
                   id=""
                   value={titleName}

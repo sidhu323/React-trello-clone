@@ -36,17 +36,19 @@ export const createCardOnList = (id, name) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-
-
+// Update a list name
+export const updateListName = (listId, name) => new Promise((resolve, reject) => {
+  crudData(endPoints.updateListName, 'PUT', '', { idList: listId }, { name })
+    .then((res) => res && resolve(res))
+    .catch((err) => reject(err));
+});
 
 // Get Specfic Card
-
 export const getparticularCard = (listId) => new Promise((resolve, reject) => {
   crudData(endPoints.cardsOnList, 'GET', { id: listId })
     .then((res) => res && resolve(res))
     .catch((err) => reject(err));
 });
-
 
 // get checklists on a card
 export const getCardChecklists = (cardId) => new Promise((resolve, reject) => {
@@ -55,14 +57,12 @@ export const getCardChecklists = (cardId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-
 // get Checklist checkitems
 export const getChecklistCheckitems = (checklistId) => new Promise((resolve, reject) => {
   crudData(endPoints.cardChecklist, 'GET', { checklistId })
     .then((res) => res && resolve(res))
     .catch((err) => reject(err));
 });
-
 
 // update card checkitems state
 export const updateCardCheckItem = (cardId, checkItemId, updateObject) => new Promise(
@@ -72,7 +72,6 @@ export const updateCardCheckItem = (cardId, checkItemId, updateObject) => new Pr
       .catch((err) => reject(err));
   },
 );
-
 
 // update card checkitems state
 export const createChecklistCheckItem = (checklistId, name) => new Promise((resolve, reject) => {

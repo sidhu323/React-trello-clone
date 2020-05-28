@@ -71,4 +71,7 @@ box-shadow: 1px 6px 5px -4px rgba(240,232,240,1) !important;
     display: none;
 
 }
+.edit-form{
+    margin: 4px 12px;
+}
 

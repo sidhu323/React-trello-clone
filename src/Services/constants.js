@@ -14,7 +14,7 @@ const endPoints = {
   deleteChecklistCheckitem: '/1/checklists/{checklistId}/checkItems/{checkItemId}',
   deleteCard: '/1/cards/{cardId}',
   archiveList: '/1/lists/{listId}/closed',
-  
+  updateListName: '/1/lists/{id}/{name}',
 };
 
 export default endPoints;
