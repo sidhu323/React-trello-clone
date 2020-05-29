@@ -68,7 +68,7 @@ const BoardList = (props) => {
   };
 
   const saveTitle = () => {
-    
+     
   };
 
   const updateTitle = (e) => {
