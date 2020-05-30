@@ -12,12 +12,15 @@ import {
   addNewChecklist,
   deleteChecklist,
   deleteChecklistCheckItem,
+  updateCardName,
 } from '../../Services/service';
 import './CardDialog.css';
 
 
 const CardDialog = (props) => {
-  const { cardData, show, onHide } = props;
+  const {
+    cardData, show, onHide, handleCardUpdate,
+  } = props;
   const [cardChecklists, setCardChecklists] = useState([]);
   const [addingItemToChecklist, setAddingItemToChecklist] = useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -84,14 +87,19 @@ const CardDialog = (props) => {
     setShowInput(true);
   };
 
-  const saveTitle = () => {
-
+  const saveTitle = (id) => {
+    updateCardName(id, titleName).then(() => {
+      handleCardUpdate();
+    });
+    setShowInput(false);
   };
 
-  const updateTitle = (e) => {
+  const updateTitle = (e, id) => {
+    if (e.key === 'Enter') {
+      saveTitle(id);
+    }
     setTitleName(e.target.value);
   };
-
 
   return (
     <>
@@ -107,7 +115,8 @@ const CardDialog = (props) => {
                   name=""
                   id=""
                   value={titleName}
-                  onChange={updateTitle}
+                  onChange={(e) => updateTitle(e, cardData.id)}
+                  onKeyDown={(e) => updateTitle(e, cardData.id)}
                   aria-describedby="helpId"
                   placeholder=""
                 />

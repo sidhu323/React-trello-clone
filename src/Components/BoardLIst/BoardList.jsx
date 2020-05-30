@@ -5,13 +5,14 @@
 import React, { useState, useEffect } from 'react';
 import {
   getCardsOnList, createCardOnList, getparticularCard, deleteCardFromList,
+  updateListName,
 } from '../../Services/service';
 import ListCard from './ListCard';
 import './ListCard.css';
 import CardDialog from '../CardDialog/CardDialog';
 
 const BoardList = (props) => {
-  const { listData } = props;
+  const { listData, handleBoardUpate } = props;
   const [listCards, setListCards] = useState([]);
   const [show, setShow] = useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -24,6 +25,7 @@ const BoardList = (props) => {
 
   const getCardsForList = (listId) => {
     getCardsOnList(listId).then((res) => {
+      console.log(res);
       setListCards(res);
     });
   };
@@ -66,12 +68,16 @@ const BoardList = (props) => {
   const openInputText = () => {
     setShowInput(true);
   };
-
-  const saveTitle = () => {
-     
+  const saveTitle = (id) => {
+    updateListName(id, titleName).then(() => {
+      handleBoardUpate();
+    });
+    setShowInput(false);
   };
-
-  const updateTitle = (e) => {
+  const updateTitle = (e, id) => {
+    if (e.key === 'Enter') {
+      saveTitle(id);
+    }
     setTitleName(e.target.value);
   };
 
@@ -90,13 +96,14 @@ const BoardList = (props) => {
             ? (
               <div className="form-group">
                 <input
-                  onBlur={saveTitle}
+                  onBlur={() => saveTitle(listData.id)}
                   type="text"
                   className="form-control form-control-sm edit-form"
                   name=""
                   id=""
                   value={titleName}
-                  onChange={updateTitle}
+                  onChange={(e) => updateTitle(e, listData.id)}
+                  onKeyDown={(e) => updateTitle(e, listData.id)}
                   aria-describedby="helpId"
                   placeholder=""
                 />
@@ -185,7 +192,7 @@ const BoardList = (props) => {
           )}
       </div>
       {selectedCardData
-  && <CardDialog cardData={selectedCardData} show={show} onHide={handleClose} />}
+  && <CardDialog handleCardUpdate={() => getCardInfo(listData.id)} cardData={selectedCardData} show={show} onHide={handleClose} />}
     </>
 
   );

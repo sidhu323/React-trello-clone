@@ -38,7 +38,7 @@ export const createCardOnList = (id, name) => new Promise((resolve, reject) => {
 
 // Update a list name
 export const updateListName = (listId, name) => new Promise((resolve, reject) => {
-  crudData(endPoints.updateListName, 'PUT', '', { idList: listId }, { name })
+  crudData(endPoints.updateListName, 'PUT', { id: listId }, { name }, { name })
     .then((res) => res && resolve(res))
     .catch((err) => reject(err));
 });
@@ -72,6 +72,13 @@ export const updateCardCheckItem = (cardId, checkItemId, updateObject) => new Pr
       .catch((err) => reject(err));
   },
 );
+
+// Update Card Name
+export const updateCardName = (cardId, name) => new Promise((resolve, reject) => {
+  crudData(endPoints.updateCardName, 'PUT', { id: cardId }, { name }, { name })
+    .then((res) => res && resolve(res))
+    .catch((err) => reject(err));
+});
 
 // update card checkitems state
 export const createChecklistCheckItem = (checklistId, name) => new Promise((resolve, reject) => {
