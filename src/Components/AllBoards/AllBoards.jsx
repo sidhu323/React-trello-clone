@@ -6,16 +6,7 @@ import { fetchBoards } from '../../actions/boardActions';
 import './AllBoard.css';
 
 const AllBoards = (props) => {
-//  const [allBoards, setAllBoards] = useState([]);
-
-  //   const getAllBoards = () => {
-  //     getMyBoards().then((res) => {
-  //       setAllBoards(res);
-  //     });
-  //   };
-
   useEffect(() => {
-    // getAllBoards();
     fetchBoards();
   }, []);
 

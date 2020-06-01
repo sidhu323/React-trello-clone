@@ -2,7 +2,7 @@
 import { FETCH_BOARDS, NEW_BOARDS } from './types';
 import { getMyBoards } from '../Services/service';
 
-export const fetchBoards = () => (dispatch) => {
+export const fetchBoards = (id) => (dispatch) => {
   // return function (dispatch){
   getMyBoards()
     .then((data) => dispatch({

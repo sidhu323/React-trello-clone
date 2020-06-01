@@ -2,6 +2,7 @@
 import { FETCH_LISTS } from './types';
 import { getListsOnBoard } from '../Services/service';
 
+
 export const fetchLists = (id) => (dispatch) => {
   // return function (dispatch){
   getListsOnBoard(id)
@@ -11,3 +12,17 @@ export const fetchLists = (id) => (dispatch) => {
     }));
   // }
 };
+
+
+// export function fetchLists(postId) {
+//   return function (dispatch, getState) {
+//    getListsOnBoard(postId).then((data) => {
+//       // dispatch
+//       dispatch({
+
+//         type: FETCH_LISTS,
+//         payload: data,
+//       });
+//     });
+//   };
+// }
