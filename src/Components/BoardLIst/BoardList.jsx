@@ -25,10 +25,10 @@ const BoardList = (props) => {
 
   const getCardsForList = (listId) => {
     getCardsOnList(listId).then((res) => {
-      console.log(res);
       setListCards(res);
     });
   };
+
 
   const createCard = (idList, name) => {
     createCardOnList(idList, name)
