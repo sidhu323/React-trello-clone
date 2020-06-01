@@ -6,7 +6,7 @@ import { fetchBoards } from '../../actions/boardActions';
 import './AllBoard.css';
 
 const AllBoards = (props) => {
-  const [allBoards, setAllBoards] = useState([]);
+//  const [allBoards, setAllBoards] = useState([]);
 
   //   const getAllBoards = () => {
   //     getMyBoards().then((res) => {
@@ -49,7 +49,6 @@ const AllBoards = (props) => {
                             backgroundColor: board.prefs.backgroundColor,
                             backgroundImage: `url(${board.prefs.backgroundImage})`,
                             backgroundSize: 'cover',
-
                           }}
                         >
                           <h5 className="card-title">{board.name}</h5>
@@ -59,7 +58,6 @@ const AllBoards = (props) => {
                     </Link>
                   </>
                 </div>
-
               ))}
 
             </div>

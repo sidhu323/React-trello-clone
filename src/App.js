@@ -15,6 +15,7 @@ function App() {
         <Router>
           <TopNavBar />
           <Switch>
+            <Route path="/" exact component={AllBoards} />
             <Route path="/boards" exact component={AllBoards} />
             <Route path="/boards/:boardId" exact component={SingleBoard} />
           </Switch>

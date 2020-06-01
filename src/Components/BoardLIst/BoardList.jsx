@@ -25,7 +25,6 @@ const BoardList = (props) => {
 
   const getCardsForList = (listId) => {
     getCardsOnList(listId).then((res) => {
-      console.log(res);
       setListCards(res);
     });
   };
@@ -46,7 +45,10 @@ const BoardList = (props) => {
 
   const deleteCard = (cardId) => {
     deleteCardFromList(cardId)
-      .then(() => getCardsForList());
+      .then(({data}) => {
+        console.log('hello', data);
+        // getCardsForList()
+      });
   };
   const openCard = (cardData) => {
     setSelectedCardData(cardData);
