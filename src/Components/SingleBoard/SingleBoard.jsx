@@ -33,7 +33,7 @@ const SingleBoard = (props) => {
       <BorderHeading boardData={boardData} />
       <div className="main-container" style={{ backgroundColor: boardData && boardData.prefs.backgroundColor }}>
         <div className="d-flex flex-wrap">
-          {boardLists.map((list) => <BoardList handleBoardUpate={() => getBoardList(currentBoardId)} listData={list} key={list.id} />)}
+          {boardLists.map((list) => <BoardList handleBoardUpate={() => getBoardList(currentBoardId)} listData={list} key={list.id}/>)}
         </div>
       </div>
     </>

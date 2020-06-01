@@ -30,7 +30,6 @@ const BoardList = (props) => {
     });
   };
 
-
   const createCard = (idList, name) => {
     createCardOnList(idList, name)
       .then(() => {

@@ -16,8 +16,6 @@ const endPoints = {
   archiveList: '/1/lists/{listId}/closed',
   updateListName: '/1/lists/{id}',
   updateCardName: '/1/cards/{id}',
-
-
 };
 
 export default endPoints;
