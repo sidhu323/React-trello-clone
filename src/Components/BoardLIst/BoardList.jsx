@@ -31,8 +31,8 @@ const BoardList = (props) => {
 
   const createCard = (idList, name) => {
     createCardOnList(idList, name)
-      .then(() => {
-        getCardsForList(idList);
+      .then((data) => {
+        setListCards([...listCards, data]);
       });
   };
 
@@ -44,15 +44,11 @@ const BoardList = (props) => {
 
   const deleteCard = (cardId) => {
     deleteCardFromList(cardId)
-      .then(({data}) => {
-        console.log('hello', data);
-        // getCardsForList()
-      });
+      .then(() => setListCards(listCards.filter((card) => card.id !== cardId)));
   };
   const openCard = (cardData) => {
     setSelectedCardData(cardData);
     setShow(true);
-    console.log(cardData);
   };
   const checklistNewAdditionState = (addingState, listId = undefined) => {
     setNewAdditionItem('');

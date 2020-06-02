@@ -52,7 +52,9 @@ const CardDialog = (props) => {
   const createChecklistItem = (checklistId, name) => {
     createChecklistCheckItem(checklistId, name)
       .then(() => setNewAdditionItem(''))
-      .then(() => getChecklistsForCard(cardData.id));
+      .then((data) => {
+        setCardChecklists([...cardChecklists, data]);
+      });
   };
 
   const checklistNewAdditionState = (addingState, checklistId = undefined) => {
@@ -67,8 +69,8 @@ const CardDialog = (props) => {
 
   const addNewChecklistToCard = (cardId, checklistName) => {
     addNewChecklist(cardId, checklistName)
-      .then(() => getChecklistsForCard(cardId))
-      .then(() => getCardChecklists(cardId))
+      .then((data) => { setCardChecklists([...cardChecklists, data]); })
+      // .then(() => getCardChecklists(cardId))
       .then(() => setNewChecklist(false));
   };
   const handleNewAddItem = (e) => {
@@ -76,11 +78,13 @@ const CardDialog = (props) => {
   };
 
   const deleteChecklistFromCard = (checklistId, cardId) => {
-    deleteChecklist(checklistId).then(() => getChecklistsForCard(cardId));
+    deleteChecklist(checklistId)
+     .then(() => setCardChecklists(cardChecklists.filter((card) => card.id !== cardId)));
   };
 
   const deleteChecklistItemFromChecklist = (checklistId, checkItemId, cardId) => {
-    deleteChecklistCheckItem(checklistId, checkItemId).then(() => getChecklistsForCard(cardId));
+    deleteChecklistCheckItem(checklistId, checkItemId)
+      .then(() => setCardChecklists(cardChecklists.filter((card) => card.id !== cardId)));
   };
 
   const openInputText = () => {
