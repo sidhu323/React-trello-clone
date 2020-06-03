@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { getSingleBoard } from '../../Services/service';
 import BorderHeading from './BorderHeading';
 import BoardList from '../BoardLIst/BoardList';
@@ -9,12 +9,14 @@ import './SingleBoard.css';
 
 const SingleBoard = (props) => {
   const [currentBoardId] = useState(props.match.params.boardId);
+  const dispatch = useDispatch();
   const [boardData, setBoardData] = useState();
   const getBoardData = (boardId) => {
     getSingleBoard(boardId).then((res) => {
       setBoardData(res);
     }).catch((err) => console.log(err));
   };
+
   // const getBoardList = (boardId) => {
   //   getListsOnBoard(boardId).then((res) => {
   //     setBoardLists(res);
@@ -23,7 +25,7 @@ const SingleBoard = (props) => {
 
   useEffect(() => {
     getBoardData(currentBoardId);
-    fetchLists(currentBoardId);
+    dispatch(fetchLists(currentBoardId));
   }, []);
 
   return (
@@ -43,4 +45,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, fetchLists)(SingleBoard);
+export default connect(mapStateToProps)(SingleBoard);

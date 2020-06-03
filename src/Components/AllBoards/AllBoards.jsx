@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { fetchBoards } from '../../actions/boardActions';
 // import { getMyBoards } from '../../Services/service';
 import './AllBoard.css';
 
 const AllBoards = (props) => {
+  const { boards } = props;
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchBoards();
+    dispatch(fetchBoards());
   }, []);
 
   return (
@@ -29,7 +31,7 @@ const AllBoards = (props) => {
             </div>
             <div className="row">
 
-              {props.boards.map((board) => (
+              {boards.map((board) => (
                 <div className="col-lg-3 col-sm-12 personal-board mt-2" key={board.id}>
                   <>
                     <Link to={`/boards/${board.id}`} style={{ color: 'inherit', textDecoration: 'inherit' }}>
@@ -63,4 +65,8 @@ const AllBoards = (props) => {
 const mapStateToProps = (state) => ({
   boards: state.allBoards.boards,
 });
-export default connect(mapStateToProps, fetchBoards)(AllBoards);
+
+// const mapDispatchToProps = dispatch => {
+//     fetchBoards: () =>  dispatch(fetchBoards())
+// };
+export default connect(mapStateToProps)(AllBoards);

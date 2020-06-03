@@ -1,5 +1,5 @@
 .particular-board-card{
-    min-height: 300px !important;
+    height: fit-content;
     background-color: #EBECF0 !important;
     overflow: scroll;
     width: 18rem;
