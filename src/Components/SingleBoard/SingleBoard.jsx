@@ -5,35 +5,30 @@ import { getSingleBoard } from '../../Services/service';
 import BorderHeading from './BorderHeading';
 import BoardList from '../BoardLIst/BoardList';
 import { fetchLists } from '../../actions/listActions';
+import { fetchBoardData } from '../../actions/boardActions';
 import './SingleBoard.css';
 
 const SingleBoard = (props) => {
+  const { lists, particularBoard } = props;
   const [currentBoardId] = useState(props.match.params.boardId);
   const dispatch = useDispatch();
-  const [boardData, setBoardData] = useState();
-  const getBoardData = (boardId) => {
-    getSingleBoard(boardId).then((res) => {
-      setBoardData(res);
-    }).catch((err) => console.log(err));
-  };
-
-  // const getBoardList = (boardId) => {
-  //   getListsOnBoard(boardId).then((res) => {
-  //     setBoardLists(res);
-  //   }).catch((err) => console.log(err));
-  // };
-
   useEffect(() => {
-    getBoardData(currentBoardId);
+    dispatch(fetchBoardData(currentBoardId));
     dispatch(fetchLists(currentBoardId));
-  }, []);
+  }, [currentBoardId]);
 
   return (
     <>
-      <BorderHeading boardData={boardData} />
-      <div className="main-container" style={{ backgroundColor: boardData && boardData.prefs.backgroundColor }}>
+      <BorderHeading boardData={particularBoard} />
+      <div className="main-container" style={{ backgroundColor: particularBoard && particularBoard.prefs.backgroundColor }}>
         <div className="d-flex flex-wrap">
-          {props.lists.map((list) => <BoardList handleBoardUpate={() => fetchLists(currentBoardId)} listData={list} key={list.id} />)}
+          {lists.map((list) => (
+            <BoardList
+              handleBoardUpate={() => fetchLists(currentBoardId)}
+              listData={list}
+              key={list.id}
+            />
+          ))}
         </div>
       </div>
     </>
@@ -42,6 +37,8 @@ const SingleBoard = (props) => {
 
 const mapStateToProps = (state) => ({
   lists: state.allLists.lists,
+  boards: state.allBoards.boards,
+  particularBoard: state.allBoards.particularBoard,
 });
 
 

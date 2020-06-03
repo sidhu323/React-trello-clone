@@ -79,7 +79,7 @@ const CardDialog = (props) => {
 
   const deleteChecklistFromCard = (checklistId, cardId) => {
     deleteChecklist(checklistId)
-     .then(() => setCardChecklists(cardChecklists.filter((card) => card.id !== cardId)));
+      .then(() => setCardChecklists(cardChecklists.filter((card) => card.id !== cardId)));
   };
 
   const deleteChecklistItemFromChecklist = (checklistId, checkItemId, cardId) => {

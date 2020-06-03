@@ -12,17 +12,3 @@ export const fetchLists = (id) => (dispatch) => {
     }));
   // }
 };
-
-
-// export function fetchLists(postId) {
-//   return function (dispatch, getState) {
-//    getListsOnBoard(postId).then((data) => {
-//       // dispatch
-//       dispatch({
-
-//         type: FETCH_LISTS,
-//         payload: data,
-//       });
-//     });
-//   };
-// }

@@ -17,7 +17,6 @@ const BoardList = (props) => {
   const [show, setShow] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [titleName, setTitleName] = useState(listData.name);
-
   const [addingCardToList, setAddingCardToList] = useState([]);
   const [currentlyUpdatingList, setCurrentlyUpdatingList] = useState([]);
   const [selectedCardData, setSelectedCardData] = useState();
@@ -38,7 +37,8 @@ const BoardList = (props) => {
 
   const getCardInfo = (id) => {
     getparticularCard(id).then(() => {
-      getCardsForList(id);
+      // getCardsForList(id);
+      console.log('gello brother');
     });
   };
 
@@ -53,7 +53,7 @@ const BoardList = (props) => {
   const checklistNewAdditionState = (addingState, listId = undefined) => {
     setNewAdditionItem('');
     setAddingCardToList(addingState);
-    listId && setCurrentlyUpdatingList(listId);
+    setCurrentlyUpdatingList(listId);
   };
   const handleNewAddItem = (e) => {
     setNewAdditionItem(e.target.value);
@@ -81,7 +81,7 @@ const BoardList = (props) => {
 
   useEffect(() => {
     getCardsForList(listData.id);
-  }, []);
+  }, [listData.id]);
 
 
   return (

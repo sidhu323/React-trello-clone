@@ -1,8 +1,8 @@
-import { bindActionCreators } from 'redux';
-import { FETCH_BOARDS, NEW_BOARDS } from '../actions/types';
+import { FETCH_BOARDS, FETCH_PARTICULAR_BOARD } from '../actions/types';
 
 const initialState = {
   boards: [],
+  particularBoard: '',
 };
 
 export default function (state = initialState, action) {
@@ -11,6 +11,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         boards: action.payload,
+      };
+    }
+    case FETCH_PARTICULAR_BOARD: {
+      return {
+        ...state,
+        particularBoard: action.payload,
       };
     }
     default:
