@@ -3,20 +3,25 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import {
   getCardsOnList, createCardOnList, getparticularCard, deleteCardFromList,
   updateListName,
 } from '../../Services/service';
+
 import ListCard from './ListCard';
 import './ListCard.css';
 import CardDialog from '../CardDialog/CardDialog';
+import { createNewCard } from '../../actions/listActions';
 
 const BoardList = (props) => {
-  const { listData, handleBoardUpate } = props;
+  const { listData, handleBoardUpate, newCard } = props;
+  const dispatch = useDispatch();
   const [listCards, setListCards] = useState([]);
   const [show, setShow] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [titleName, setTitleName] = useState(listData.name);
+
   const [addingCardToList, setAddingCardToList] = useState([]);
   const [currentlyUpdatingList, setCurrentlyUpdatingList] = useState([]);
   const [selectedCardData, setSelectedCardData] = useState();
@@ -28,23 +33,22 @@ const BoardList = (props) => {
     });
   };
 
+
   const createCard = (idList, name) => {
-    createCardOnList(idList, name)
-      .then((data) => {
-        setListCards([...listCards, data]);
-      });
+    dispatch(createNewCard(idList, name));
   };
 
   const getCardInfo = (id) => {
-    getparticularCard(id).then(() => {
+    getparticularCard(id).then((data) => {
+      console.log(data);
       // getCardsForList(id);
-      console.log('gello brother');
     });
   };
 
   const deleteCard = (cardId) => {
-    deleteCardFromList(cardId)
-      .then(() => setListCards(listCards.filter((card) => card.id !== cardId)));
+    setListCards(listCards.filter((card) => card.id !== cardId));
+    deleteCardFromList(cardId);
+    // .then(() => setListCards(listCards.filter((card) => card.id !== cardId)));
   };
   const openCard = (cardData) => {
     setSelectedCardData(cardData);
@@ -53,7 +57,7 @@ const BoardList = (props) => {
   const checklistNewAdditionState = (addingState, listId = undefined) => {
     setNewAdditionItem('');
     setAddingCardToList(addingState);
-    setCurrentlyUpdatingList(listId);
+    listId && setCurrentlyUpdatingList(listId);
   };
   const handleNewAddItem = (e) => {
     setNewAdditionItem(e.target.value);
@@ -81,7 +85,8 @@ const BoardList = (props) => {
 
   useEffect(() => {
     getCardsForList(listData.id);
-  }, [listData.id]);
+    setListCards([...listCards, newCard]);
+  }, [listData.id, newCard]);
 
 
   return (
@@ -89,7 +94,7 @@ const BoardList = (props) => {
       <div className="card particular-board-card" onClick={() => getCardInfo(listData.id)}>
 
         <div className="d-flex justify-content-between align-items-center">
-          { (showInput)
+          {(showInput)
             ? (
               <div className="form-group">
                 <input
@@ -100,14 +105,14 @@ const BoardList = (props) => {
                   id=""
                   value={titleName}
                   onChange={(e) => updateTitle(e, listData.id)}
-                  onKeyDown={(e) => updateTitle(e, listData.id)}
+                  // onKeyDown={(e) => updateTitle(e, listData.id)}
                   aria-describedby="helpId"
                   placeholder=""
                 />
               </div>
             )
             : (
-              <div className="card-title" onClick={openInputText}>{listData && listData.name}</div>
+              <div className="card-title" onClick={() => openInputText}>{listData && listData.name}</div>
             )}
 
           <div className="dropdown mr-3">
@@ -130,9 +135,9 @@ const BoardList = (props) => {
 
         <div className="card-body particular-board-card-body">
           {listCards.map((card) => (
-          // <div onClick={() => openCard(card)}>
+            // <div onClick={() => openCard(card)}>
             <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard} />
-          // </div>
+            // </div>
           ))}
         </div>
         {addingCardToList && currentlyUpdatingList === listData.id
@@ -177,11 +182,11 @@ const BoardList = (props) => {
             <button
               type="button "
               onClick={
-              () => {
-                checklistNewAdditionState(true, listData.id);
-                createCard(true, listData.id);
+                () => {
+                  checklistNewAdditionState(true, listData.id);
+                  // createCard(true, listData.id);
+                }
               }
-            }
               className="add-card"
             >
               {listCards.length === 0 ? '+ Add a card' : '+ Add another card'}
@@ -189,10 +194,13 @@ const BoardList = (props) => {
           )}
       </div>
       {selectedCardData
-  && <CardDialog handleCardUpdate={() => getCardInfo(listData.id)} cardData={selectedCardData} show={show} onHide={handleClose} />}
+        && <CardDialog handleCardUpdate={() => getCardInfo(listData.id)} cardData={selectedCardData} show={show} onHide={handleClose} />}
     </>
 
   );
 };
 
-export default BoardList;
+const mapStateToProps = (state) => ({
+  newCard: state.allLists.newCard,
+});
+export default connect(mapStateToProps)(BoardList);
