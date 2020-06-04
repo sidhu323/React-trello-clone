@@ -83,7 +83,7 @@ const BoardList = (props) => {
   useEffect(() => {
     getCardsForList(listData.id);
     setListCards([...listCards, newCard]);
-  }, [listData.id, newCard]);
+  }, []);
 
 
   return (
