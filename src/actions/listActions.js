@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { FETCH_LISTS, CREATE_CARD } from './types';
-import { getListsOnBoard, createCardOnList } from '../Services/service';
+import { getListsOnBoard, createCardOnList, deleteCardFromList } from '../Services/service';
 
 
 export const fetchLists = (id) => (dispatch) => {
@@ -21,4 +21,12 @@ export const createNewCard = (idList, name) => (dispatch) => {
       payload: data,
     }));
   // }
+};
+
+export const deleteSelectedCard = (cardList) => (dispatch) => {
+  deleteCardFromList(cardList)
+    .then((data) => dispatch({
+      type: CREATE_CARD,
+      payload: data,
+    }));
 };

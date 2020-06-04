@@ -5,3 +5,4 @@ export const FETCH_CARDS = 'FETCH_CARDS';
 export const FETCH_CHECKLISTS = 'FETCH_CHECKLISTS';
 export const NEW_BOARDS = 'NEW_BOARD';
 export const CREATE_CARD = 'CREATE_CARD';
+export const DELETE_CARD = 'DELETE_CARD';

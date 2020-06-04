@@ -12,7 +12,7 @@ import {
 import ListCard from './ListCard';
 import './ListCard.css';
 import CardDialog from '../CardDialog/CardDialog';
-import { createNewCard } from '../../actions/listActions';
+import { createNewCard, deleteSelectedCard } from '../../actions/listActions';
 
 const BoardList = (props) => {
   const { listData, handleBoardUpate, newCard } = props;
@@ -39,16 +39,13 @@ const BoardList = (props) => {
   };
 
   const getCardInfo = (id) => {
-    getparticularCard(id).then((data) => {
-      console.log(data);
-      // getCardsForList(id);
+    getparticularCard(id).then(() => {
+      getCardsForList(id);
     });
   };
-
   const deleteCard = (cardId) => {
+    dispatch(deleteSelectedCard(cardId));
     setListCards(listCards.filter((card) => card.id !== cardId));
-    deleteCardFromList(cardId);
-    // .then(() => setListCards(listCards.filter((card) => card.id !== cardId)));
   };
   const openCard = (cardData) => {
     setSelectedCardData(cardData);
@@ -135,9 +132,7 @@ const BoardList = (props) => {
 
         <div className="card-body particular-board-card-body">
           {listCards.map((card) => (
-            // <div onClick={() => openCard(card)}>
-            <ListCard cardData={card} key={card.id} deleteCard={deleteCard} openCard={openCard} />
-            // </div>
+            <ListCard key={card.id} cardData={card} deleteCard={deleteCard} openCard={openCard} />
           ))}
         </div>
         {addingCardToList && currentlyUpdatingList === listData.id

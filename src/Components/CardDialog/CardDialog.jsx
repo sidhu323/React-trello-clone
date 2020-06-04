@@ -34,14 +34,9 @@ const CardDialog = (props) => {
   const getChecklistsForCard = (cardId) => {
     getCardChecklists(cardId)
       .then((res) => {
-        console.log('res of checklist', res);
         setCardChecklists(res);
       });
   };
-
-  useEffect(() => {
-    getChecklistsForCard(cardData.id);
-  }, []);
 
   const markChecklistItem = (cardId, itemId, completionState) => {
     updateCardCheckItem(cardId, itemId, { state: completionState })
@@ -104,6 +99,11 @@ const CardDialog = (props) => {
     }
     setTitleName(e.target.value);
   };
+
+  useEffect(() => {
+    getChecklistsForCard(cardData.id);
+  }, []);
+
 
   return (
     <>

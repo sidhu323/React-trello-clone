@@ -20,7 +20,6 @@ const ListCard = (props) => {
           <i className="fa fa-ellipsis-h fa-lg" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
 
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <span className="dropdown-item">Edit</span>
             <span className="dropdown-item" onClick={() => deleteCard(cardData.id)}>Delete</span>
           </div>
         </div>
