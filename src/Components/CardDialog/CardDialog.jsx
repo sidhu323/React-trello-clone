@@ -105,7 +105,7 @@ const CardDialog = (props) => {
     <>
       <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-          { (showInput)
+          {(showInput)
             ? (
               <div className="form-group">
                 <input
@@ -131,9 +131,9 @@ const CardDialog = (props) => {
             <form>
               <div className="row">
                 <div className="col-lg-8">
-                  {cardChecklists.map((checklist) => (
+                  {cardChecklists.map((checklist, i) => (
                     <>
-                      <div className="d-flex justify-content-between">
+                      <div key={i} className="d-flex justify-content-between">
                         <h5 className="mt-2 mb-2 ">
                           <i
                             className="fa fa-check-square-o mr-2"
@@ -145,9 +145,9 @@ const CardDialog = (props) => {
                       </div>
 
 
-                      {checklist.checkItems.map((checkItem) => (
+                      {checklist.checkItems.map((checkItem, i) => (
                         <>
-                          <div className="each-checklist-item-main-box">
+                          <div key={i} className="each-checklist-item-main-box">
                             <div className="form-check">
                               <label
                                 className="form-check-label"
@@ -228,42 +228,42 @@ const CardDialog = (props) => {
                     </>
                   ))}
                   {newChecklist
-                        && (
-                          <div>
-                            <div className="form-group">
+                    && (
+                      <div>
+                        <div className="form-group">
 
-                              <textarea
-                                type="text"
-                                className="form-control add-card-text"
-                                name=""
-                                id=""
-                                aria-describedby="helpId"
-                                placeholder="Add new checklist"
-                                rows="2"
-                                onChange={handleNewChecklistName}
-                                value={newChecklistName}
-                              />
+                          <textarea
+                            type="text"
+                            className="form-control add-card-text"
+                            name=""
+                            id=""
+                            aria-describedby="helpId"
+                            placeholder="Add new checklist"
+                            rows="2"
+                            onChange={handleNewChecklistName}
+                            value={newChecklistName}
+                          />
 
-                            </div>
+                        </div>
 
 
-                            <div className="d-flex add-item-area">
-                              <button
-                                type="button"
-                                className="btn btn-success  btn-sm"
-                                onClick={() => addNewChecklistToCard(cardData.id, newChecklistName)}
-                              >
-                                Add
+                        <div className="d-flex add-item-area">
+                          <button
+                            type="button"
+                            className="btn btn-success  btn-sm"
+                            onClick={() => addNewChecklistToCard(cardData.id, newChecklistName)}
+                          >
+                            Add
                               </button>
-                              <i
-                                className="fa fa-times"
-                                onClick={() => setNewChecklist(false)}
-                                aria-hidden="true"
-                              />
-                            </div>
+                          <i
+                            className="fa fa-times"
+                            onClick={() => setNewChecklist(false)}
+                            aria-hidden="true"
+                          />
+                        </div>
 
-                          </div>
-                        )}
+                      </div>
+                    )}
                 </div>
                 <div className="col-lg-4 align-item-center">
 

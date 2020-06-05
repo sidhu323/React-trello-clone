@@ -12,12 +12,14 @@ import {
 import ListCard from './ListCard';
 import './ListCard.css';
 import CardDialog from '../CardDialog/CardDialog';
-import { createNewCard, deleteSelectedCard } from '../../actions/listActions';
+import { createNewCard, deleteSelectedCard, getCardsForList } from '../../actions/listActions';
 
 const BoardList = (props) => {
-  const { listData, handleBoardUpate, newCard } = props;
+  const {
+    listData, handleBoardUpate, newCard, listsOfAllCards,
+  } = props;
   const dispatch = useDispatch();
-  const [listCards, setListCards] = useState([]);
+  // const [listCards, setListCards] = useState(listsOfCards[props.listData.id]);
   const [show, setShow] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [titleName, setTitleName] = useState(listData.name);
@@ -26,12 +28,6 @@ const BoardList = (props) => {
   const [currentlyUpdatingList, setCurrentlyUpdatingList] = useState([]);
   const [selectedCardData, setSelectedCardData] = useState();
   const [newAdditionItem, setNewAdditionItem] = useState('');
-
-  const getCardsForList = (listId) => {
-    getCardsOnList(listId).then((res) => {
-      setListCards(res);
-    });
-  };
 
 
   const createCard = (idList, name) => {
@@ -43,9 +39,9 @@ const BoardList = (props) => {
       getCardsForList(id);
     });
   };
-  const deleteCard = (cardId) => {
-    dispatch(deleteSelectedCard(cardId));
-    setListCards(listCards.filter((card) => card.id !== cardId));
+  const deleteCard = (listId, cardId) => {
+    dispatch(deleteSelectedCard(listId, cardId));
+    // setListCards(listsOfCards[props.listData.id].filter((card) => card.id !== cardId));
   };
   const openCard = (cardData) => {
     setSelectedCardData(cardData);
@@ -78,13 +74,16 @@ const BoardList = (props) => {
     }
     setTitleName(e.target.value);
   };
-
-
   useEffect(() => {
-    getCardsForList(listData.id);
-    setListCards([...listCards, newCard]);
+    dispatch(getCardsForList(listData.id));
+    // setListCards(props.listsOfCards[props.listData.id])
   }, []);
 
+  // useEffect(() => {
+  //   // dispatch(deleteSelectedCard(cardId));
+  //   getCardsForList(listData.id);
+  //   setListCards([...listsOfCards[props.listData.id], newCard]);
+  // }, []);
 
   return (
     <>
@@ -131,8 +130,9 @@ const BoardList = (props) => {
         </div>
 
         <div className="card-body particular-board-card-body">
-          {listCards.map((card) => (
-            <ListCard key={card.id} cardData={card} deleteCard={deleteCard} openCard={openCard} />
+          {console.log('beforMap', listsOfAllCards, listData.id)}
+          {listsOfAllCards[listData.id] && listsOfAllCards[listData.id].map((card, i) => (
+            <ListCard key={i} cardData={card} listId={listData.id} deleteCard={deleteCard} openCard={openCard} />
           ))}
         </div>
         {addingCardToList && currentlyUpdatingList === listData.id
@@ -184,7 +184,7 @@ const BoardList = (props) => {
               }
               className="add-card"
             >
-              {listCards.length === 0 ? '+ Add a card' : '+ Add another card'}
+              {listsOfAllCards[props.listData.id] && listsOfAllCards[props.listData.id].length === 0 ? '+ Add a card' : '+ Add another card'}
             </button>
           )}
       </div>
@@ -195,7 +195,19 @@ const BoardList = (props) => {
   );
 };
 
+// const mapStateToProps = (state, props) => {
+//   const listsOfCards = state.allLists.listsOfCards;
+
+//   // const listsOfCards = !state.allLists.listsOfCards ? [] : state.allLists.listsOfCards[props.listData.id].filter(
+//   //   card => props.listData.id === parseInt(card.id)
+//   // );
+//   return {
+//     newCard: state.allLists.newCard,
+//     listsOfCards: listsOfCards,
+//   };
+// };
 const mapStateToProps = (state) => ({
   newCard: state.allLists.newCard,
+  listsOfAllCards: state.allLists.listsOfCards,
 });
 export default connect(mapStateToProps)(BoardList);

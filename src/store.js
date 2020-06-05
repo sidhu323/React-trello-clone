@@ -9,10 +9,11 @@ const middleware = [thunk];
 const store = createStore(
   rootReducer,
   initialState,
-
-  applyMiddleware(thunk),
-  // eslint-disable-next-line no-underscore-dangle
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  compose(
+    applyMiddleware(thunk),
+    // eslint-disable-next-line no-underscore-dangle
+    window._REDUX_DEVTOOLS_EXTENSION_ && window._REDUX_DEVTOOLS_EXTENSION_(),
+  )
 
 );
 

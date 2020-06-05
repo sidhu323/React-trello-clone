@@ -32,7 +32,7 @@ export const getCardsOnList = (listId) => new Promise((resolve, reject) => {
 // Create a new Cards on list
 export const createCardOnList = (id, name) => new Promise((resolve, reject) => {
   crudData(endPoints.createNewCard, 'POST', '', { idList: id }, { name })
-    .then((res) => res && resolve(res))
+    .then((res) => res && resolve(res.json()))
     .catch((err) => reject(err));
 });
 
