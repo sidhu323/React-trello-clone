@@ -1,6 +1,6 @@
-import { bindActionCreators } from 'redux';
 import {
   FETCH_LISTS, ADD_CARD, DELETE_CARD, CARDS_FOR_LIST,
+  CARDS_CHECKLIST
 } from '../actions/types';
 
 const initialState = {
@@ -8,6 +8,7 @@ const initialState = {
   newCard: {},
   deleteCard: {},
   listsOfCards: {},
+  checklists: [],
 };
 
 export default function (state = initialState, action) {
@@ -41,6 +42,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         listsOfCards: list,
+      };
+    }
+    case CARDS_CHECKLIST: {
+      return {
+        ...state,
+        checklists: action.payload.data,
       };
     }
 

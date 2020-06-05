@@ -5,6 +5,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { connect, useDispatch } from 'react-redux';
 import {
   getCardChecklists,
   updateCardCheckItem,
@@ -15,32 +16,37 @@ import {
   updateCardName,
 } from '../../Services/service';
 import './CardDialog.css';
-
+import { getChecklistsForCard } from '../../actions/listActions';
+import { Fragment } from 'react';
 
 const CardDialog = (props) => {
   const {
-    cardData, show, onHide, handleCardUpdate,
+    cardData, show, onHide, handleCardUpdate, checklists,
   } = props;
-  const [cardChecklists, setCardChecklists] = useState([]);
+  // const [cardChecklists, setCardChecklists] = useState([]);
   const [addingItemToChecklist, setAddingItemToChecklist] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [titleName, setTitleName] = useState(cardData.name);
-  const [currentlyUpdatingChecklist, setCurrentlyUpdatingChecklist] = useState();
+  const [
+    currentlyUpdatingChecklist,
+    setCurrentlyUpdatingChecklist,
+  ] = useState();
   const [newAdditionItem, setNewAdditionItem] = useState('');
   const [newChecklist, setNewChecklist] = useState(false);
   const [newChecklistName, setNewChecklistName] = useState('');
+  const dispatch = useDispatch();
 
-
-  const getChecklistsForCard = (cardId) => {
-    getCardChecklists(cardId)
-      .then((res) => {
-        console.log('res of checklist', res);
-        setCardChecklists(res);
-      });
-  };
+  // const getChecklistsForCard = (cardId) => {
+  //   getCardChecklists(cardId)
+  //     .then((res) => {
+  //       console.log('res of checklist', res);
+  //       setCardChecklists(res);
+  //     });
+  // };
 
   useEffect(() => {
-    getChecklistsForCard(cardData.id);
+    // getChecklistsForCard(cardData.id);
+    dispatch(getChecklistsForCard(cardData.id));
   }, []);
 
   const markChecklistItem = (cardId, itemId, completionState) => {
@@ -79,7 +85,11 @@ const CardDialog = (props) => {
     deleteChecklist(checklistId).then(() => getChecklistsForCard(cardId));
   };
 
-  const deleteChecklistItemFromChecklist = (checklistId, checkItemId, cardId) => {
+  const deleteChecklistItemFromChecklist = (
+    checklistId,
+    checkItemId,
+    cardId,
+  ) => {
     deleteChecklistCheckItem(checklistId, checkItemId).then(() => getChecklistsForCard(cardId));
   };
 
@@ -105,53 +115,66 @@ const CardDialog = (props) => {
     <>
       <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-          {(showInput)
-            ? (
-              <div className="form-group">
-                <input
-                  onBlur={saveTitle}
-                  type="text"
-                  className="form-control form-control-sm"
-                  name=""
-                  id=""
-                  value={titleName}
-                  onChange={(e) => updateTitle(e, cardData.id)}
-                  onKeyDown={(e) => updateTitle(e, cardData.id)}
-                  aria-describedby="helpId"
-                  placeholder=""
-                />
-              </div>
-            )
-            : (
-              <Modal.Title onClick={openInputText}>{cardData && cardData.name}</Modal.Title>
-            )}
+          {showInput ? (
+            <div className="form-group">
+              <input
+                onBlur={saveTitle}
+                type="text"
+                className="form-control form-control-sm"
+                name=""
+                id=""
+                value={titleName}
+                onChange={(e) => updateTitle(e, cardData.id)}
+                onKeyDown={(e) => updateTitle(e, cardData.id)}
+                aria-describedby="helpId"
+                placeholder=""
+              />
+            </div>
+          ) : (
+            <Modal.Title onClick={openInputText}>
+              {cardData && cardData.name}
+            </Modal.Title>
+          )}
         </Modal.Header>
         <Modal.Body>
           <div className="container-fluid">
             <form>
               <div className="row">
                 <div className="col-lg-8">
-                  {cardChecklists.map((checklist, i) => (
-                    <>
-                      <div key={i} className="d-flex justify-content-between">
-                        <h5 className="mt-2 mb-2 ">
-                          <i
-                            className="fa fa-check-square-o mr-2"
-                            aria-hidden="true"
-                          />
-                          {checklist.name}
-                        </h5>
-                        <button type="button" className="btn btn-sm trello-button" onClick={() => deleteChecklistFromCard(checklist.id, cardData.id)}>Delete</button>
-                      </div>
+                  {checklists.length > 0
+                    && checklists.map((checklist, i) => (
+                      <div key={checklist.id}>
+                        <div className="d-flex justify-content-between">
+                          <h5 className="mt-2 mb-2 ">
+                            <i
+                              className="fa fa-check-square-o mr-2"
+                              aria-hidden="true"
+                            />
+                            {checklist.name}
+                          </h5>
+                          <button
+                            type="button"
+                            className="btn btn-sm trello-button"
+                            onClick={() => deleteChecklistFromCard(checklist.id, cardData.id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
 
-
-                      {checklist.checkItems.map((checkItem, i) => (
-                        <>
-                          <div key={i} className="each-checklist-item-main-box">
+                        {checklist.checkItems.length > 0 && checklist.checkItems.map((checkItem, i) => (
+                          <div
+                            key={checkItem.id}
+                            className="each-checklist-item-main-box"
+                          >
                             <div className="form-check">
                               <label
                                 className="form-check-label"
-                                style={{ textDecoration: checkItem.state === 'complete' ? 'line-through' : 'none' }}
+                                style={{
+                                  textDecoration:
+                                      checkItem.state === 'complete'
+                                        ? 'line-through'
+                                        : 'none',
+                                }}
                               >
                                 <input
                                   type="checkbox"
@@ -159,32 +182,52 @@ const CardDialog = (props) => {
                                   name=""
                                   id=""
                                   value="checkedValue"
-                                  checked={(checkItem.state === 'complete')}
-                                  onChange={() => markChecklistItem(cardData.id, checkItem.id,
-                                    (checkItem.state === 'complete') ? 'incomplete' : 'complete')}
+                                  checked={checkItem.state === 'complete'}
+                                  onChange={() => markChecklistItem(
+                                    cardData.id,
+                                    checkItem.id,
+                                    checkItem.state === 'complete'
+                                      ? 'incomplete'
+                                      : 'complete',
+                                  )}
                                 />
                                 {checkItem.name}
                               </label>
                             </div>
 
                             <div className="dropdown vertical-dot">
+                              <i
+                                className="fa fa-ellipsis-h"
+                                aria-hidden="true"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              />
 
-                              <i className="fa fa-ellipsis-h" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-
-                              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <span className="dropdown-item" onClick={() => deleteChecklistItemFromChecklist(checklist.id, checkItem.id, cardData.id)}>Delete</span>
+                              <div
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                              >
+                                <span
+                                  className="dropdown-item"
+                                  onClick={() => deleteChecklistItemFromChecklist(
+                                    checklist.id,
+                                    checkItem.id,
+                                    cardData.id,
+                                  )}
+                                >
+                                  Delete
+                                </span>
                               </div>
                             </div>
                           </div>
 
-
-                        </>
-                      ))}
-                      {addingItemToChecklist && currentlyUpdatingChecklist === checklist.id
-                        ? (
+                        ))}
+                        {addingItemToChecklist
+                        && currentlyUpdatingChecklist === checklist.id ? (
                           <div>
                             <div className="form-group">
-
                               <input
                                 type="text"
                                 className="form-control"
@@ -195,15 +238,16 @@ const CardDialog = (props) => {
                                 onChange={handleNewAddItem}
                                 value={newAdditionItem}
                               />
-
                             </div>
 
                             <div className="d-flex add-item-area">
                               <button
                                 type="button"
                                 className="btn btn-success  btn-sm"
-                                onClick={() => createChecklistItem(checklist.id,
-                                  newAdditionItem)}
+                                onClick={() => createChecklistItem(
+                                  checklist.id,
+                                  newAdditionItem,
+                                )}
                               >
                                 Add
                               </button>
@@ -213,65 +257,59 @@ const CardDialog = (props) => {
                                 aria-hidden="true"
                               />
                             </div>
-
                           </div>
-                        )
-                        : (
-                          <button
-                            className="button btn-add-item mt-2"
-                            onClick={() => checklistNewAdditionState(true, checklist.id)}
-                          >
-                            Add an
-                            item
-                          </button>
-                        )}
-                    </>
-                  ))}
-                  {newChecklist
-                    && (
-                      <div>
-                        <div className="form-group">
-
-                          <textarea
-                            type="text"
-                            className="form-control add-card-text"
-                            name=""
-                            id=""
-                            aria-describedby="helpId"
-                            placeholder="Add new checklist"
-                            rows="2"
-                            onChange={handleNewChecklistName}
-                            value={newChecklistName}
-                          />
-
-                        </div>
-
-
-                        <div className="d-flex add-item-area">
-                          <button
-                            type="button"
-                            className="btn btn-success  btn-sm"
-                            onClick={() => addNewChecklistToCard(cardData.id, newChecklistName)}
-                          >
-                            Add
-                              </button>
-                          <i
-                            className="fa fa-times"
-                            onClick={() => setNewChecklist(false)}
-                            aria-hidden="true"
-                          />
-                        </div>
-
+                          ) : (
+                            <button
+                              className="button btn-add-item mt-2"
+                              onClick={() => checklistNewAdditionState(true, checklist.id)}
+                            >
+                              Add an item
+                            </button>
+                          )}
                       </div>
-                    )}
+                    ))}
+                  {newChecklist && (
+                    <div>
+                      <div className="form-group">
+                        <textarea
+                          type="text"
+                          className="form-control add-card-text"
+                          name=""
+                          id=""
+                          aria-describedby="helpId"
+                          placeholder="Add new checklist"
+                          rows="2"
+                          onChange={handleNewChecklistName}
+                          value={newChecklistName}
+                        />
+                      </div>
+
+                      <div className="d-flex add-item-area">
+                        <button
+                          type="button"
+                          className="btn btn-success  btn-sm"
+                          onClick={() => addNewChecklistToCard(cardData.id, newChecklistName)}
+                        >
+                          Add
+                        </button>
+                        <i
+                          className="fa fa-times"
+                          onClick={() => setNewChecklist(false)}
+                          aria-hidden="true"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="col-lg-4 align-item-center">
-
-                  <button type="button" className="btn btn-md ml-4 trello-button d-content" onClick={() => setNewChecklist(true)}>
+                  <button
+                    type="button"
+                    className="btn btn-md ml-4 trello-button d-content"
+                    onClick={() => setNewChecklist(true)}
+                  >
                     <i className="fa fa-check-square-o" aria-hidden="true" />
                     Checklist
                   </button>
-
                 </div>
               </div>
             </form>
@@ -279,8 +317,11 @@ const CardDialog = (props) => {
         </Modal.Body>
       </Modal>
     </>
-
   );
 };
 
-export default CardDialog;
+const mapStateToProps = (state) => ({
+  checklists: state.allLists.checklists,
+});
+
+export default connect(mapStateToProps)(CardDialog);

@@ -4,11 +4,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import {
-  getCardsOnList, createCardOnList, getparticularCard, deleteCardFromList,
-  updateListName,
-} from '../../Services/service';
-
+import { getparticularCard, updateListName } from '../../Services/service';
 import ListCard from './ListCard';
 import './ListCard.css';
 import CardDialog from '../CardDialog/CardDialog';
@@ -16,7 +12,7 @@ import { createNewCard, deleteSelectedCard, getCardsForList } from '../../action
 
 const BoardList = (props) => {
   const {
-    listData, handleBoardUpate, newCard, listsOfAllCards,
+    listData, handleBoardUpate, listsOfAllCards,
   } = props;
   const dispatch = useDispatch();
   // const [listCards, setListCards] = useState(listsOfCards[props.listData.id]);
@@ -130,7 +126,6 @@ const BoardList = (props) => {
         </div>
 
         <div className="card-body particular-board-card-body">
-          {console.log('beforMap', listsOfAllCards, listData.id)}
           {listsOfAllCards[listData.id] && listsOfAllCards[listData.id].map((card, i) => (
             <ListCard key={i} cardData={card} listId={listData.id} deleteCard={deleteCard} openCard={openCard} />
           ))}
@@ -207,7 +202,6 @@ const BoardList = (props) => {
 //   };
 // };
 const mapStateToProps = (state) => ({
-  newCard: state.allLists.newCard,
   listsOfAllCards: state.allLists.listsOfCards,
 });
 export default connect(mapStateToProps)(BoardList);

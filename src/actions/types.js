@@ -8,3 +8,4 @@ export const ADD_CARD = 'ADD_CARD';
 export const DELETE_CARD = 'DELETE_CARD';
 export const LISTS_OF_CARDS = 'LISTS_OF_CARDS';
 export const CARDS_FOR_LIST = 'CARDS_FOR_LIST';
+export const CARDS_CHECKLIST = 'CARDS_CHECKLIST';
